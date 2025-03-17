@@ -6,6 +6,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,5 +76,11 @@ public class EmployeeController {
 
         pairs.sort((p1, p2) -> Long.compare(p2.getDaysWorked(), p1.getDaysWorked())); // Sort by days worked
         return pairs;
+    }
+
+    // the following method will show the upload form
+    @GetMapping("/")
+    public String showUploadForm(){
+        return "index";
     }
 }
