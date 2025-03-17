@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Employee Work Duration</title>
@@ -12,6 +12,27 @@
         <input type="file" name="file" required />
         <button type="submit">Upload</button>
     </form>
+
+    <h2>The following pair of employees are  with longest amount of time worked together</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Employee ID #1</th>
+            <th>Employee ID #2</th>
+            <th>Project ID</th>
+            <th>Days Worked</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pair : ${pairs}">
+            <td th:text="${pair.employeeId1}"></td>
+            <td th:text="${pair.employeeId2}"></td>
+            <td th:text="${pair.projectId}"></td>
+            <td th:text="${pair.daysWorked}"></td>
+        </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>
