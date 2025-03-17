@@ -51,4 +51,29 @@ public class EmployeeController {
     }
 
 
+    // calculating the employee pairs working together
+    private List<EmployeePair> getEmployeePairs(List<Employee> employees) {
+        List<EmployeePair> pairs = new ArrayList<>();
+
+        for (Employee e1 : employees) {
+            for (Employee e2 : employees) {
+                if (e1.getEmployeeId().equals(e2.getEmployeeId())) continue; // Skip same employee
+
+                if (e1.getProjectId().equals(e2.getProjectId())) {
+                    // Calculate overlap
+                    LocalDate overlapStart = e1.getStartDate().isAfter(e2.getStartDate()) ? e1.getStartDate() : e2.getStartDate();
+                    LocalDate overlapEnd = e1.getEndDate().isBefore(e2.getEndDate()) ? e1.getEndDate() : e2.getEndDate();
+
+                    if (!overlapStart.isAfter(overlapEnd)) {
+                        long daysWorked = overlapStart.until(overlapEnd).getDays();
+                        EmployeePair pair = new EmployeePair(e1.getEmployeeId(), e2.getEmployeeId(), e1.getProjectId(), daysWorked);
+                        pairs.add(pair);
+                    }
+                }
+            }
+        }
+
+        pairs.sort((p1, p2) -> Long.compare(p2.getDaysWorked(), p1.getDaysWorked())); // Sort by days worked
+        return pairs;
+    }
 }
